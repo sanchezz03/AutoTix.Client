@@ -26,15 +26,14 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const response = await authService.sendSms({ phone: phoneE164 });
+      setCode(["", "", "", ""]);
+      setPopupOpen(true);
 
+      const response = await authService.sendSms({ phone: phoneE164 });
       if (!response.success) {
         setLocalError("Failed to send SMS");
         return;
       }
-
-      setCode(["", "", "", ""]);
-      setPopupOpen(true);
     } catch (e: any) {
       setLocalError(e.message ?? "Server error");
     } finally {

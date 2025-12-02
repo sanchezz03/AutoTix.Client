@@ -24,12 +24,11 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleLogout = async () => {
     try {
+      setIsAuthenticated(false);
+      setUserName(null);
       await authService.logout();
     } catch (e) {
       console.error(e);
-    } finally {
-      setIsAuthenticated(false);
-      setUserName(null);
     }
   };
 

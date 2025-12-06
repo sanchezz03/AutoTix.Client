@@ -25,7 +25,6 @@ export class AuthService {
       "/api/auth/login",
       data
     );
-    console.log("res: ", res);
 
     tokenStorage.set(res.token);
 

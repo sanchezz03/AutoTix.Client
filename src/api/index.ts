@@ -1,5 +1,6 @@
 import { HttpClient } from "./httpClient";
 import { AuthService } from "./services/authService";
+import { StationService } from "./services/stationService";
 
 export const tokenStorage = {
   get: () => localStorage.getItem("token"),
@@ -27,4 +28,10 @@ export const client = new HttpClient({
   },
 });
 
+export const stationsClient = new HttpClient({
+  baseUrl: "https://localhost:7134",
+  getToken: () => localStorage.getItem("token"),
+});
+
 export const authService = new AuthService(client);
+export const stationService = new StationService(stationsClient);

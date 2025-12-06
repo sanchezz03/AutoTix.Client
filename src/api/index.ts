@@ -19,18 +19,21 @@ export const clearAuth = () => {
   userStorage.clear();
 };
 
+const handleUnauthorized = () => {
+  clearAuth();
+  window.location.href = "/login";
+};
+
 export const client = new HttpClient({
   baseUrl: "https://localhost:7046",
   getToken: tokenStorage.get,
-  onUnauthorized: () => {
-    tokenStorage.clear();
-    window.location.href = "/login";
-  },
+  onUnauthorized: handleUnauthorized,
 });
 
 export const stationsClient = new HttpClient({
   baseUrl: "https://localhost:7134",
-  getToken: () => localStorage.getItem("token"),
+  getToken: tokenStorage.get,
+  onUnauthorized: handleUnauthorized,
 });
 
 export const authService = new AuthService(client);

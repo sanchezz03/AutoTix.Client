@@ -2,7 +2,7 @@ import { Route } from "lucide-react";
 import type { Station } from "../../types/station/station";
 import { useEffect, useState } from "react";
 
-interface StationHeaderProps {
+interface IStationHeaderProps {
   station: Station;
   onChange: () => void;
 }
@@ -10,7 +10,7 @@ interface StationHeaderProps {
 export default function StationHeader({
   station,
   onChange,
-}: StationHeaderProps) {
+}: IStationHeaderProps) {
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   );
@@ -29,7 +29,7 @@ export default function StationHeader({
   }, []);
 
   return (
-    <div className="bg-white rounded-xl shadow p-5 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div className="!bg-indigo-50 rounded-xl shadow p-5 flex flex-col md:flex-row justify-between items-center gap-4">
       <div className="flex items-center gap-4">
         <Route className="w-10 h-10 text-indigo-600" />
         <span className="font-bold text-xl text-gray-800">{station.name}</span>

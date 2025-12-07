@@ -1,6 +1,7 @@
 import { HttpClient } from "./httpClient";
 import { AuthService } from "./services/authService";
 import { StationService } from "./services/stationService";
+import { TripService } from "./services/tripService";
 
 export const tokenStorage = {
   get: () => localStorage.getItem("token"),
@@ -36,5 +37,12 @@ export const stationsClient = new HttpClient({
   onUnauthorized: handleUnauthorized,
 });
 
+export const tripsClient = new HttpClient({
+  baseUrl: "https://localhost:7134",
+  getToken: tokenStorage.get,
+  onUnauthorized: handleUnauthorized,
+});
+
 export const authService = new AuthService(client);
 export const stationService = new StationService(stationsClient);
+export const tripService = new TripService(tripsClient);

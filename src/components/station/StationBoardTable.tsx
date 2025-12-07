@@ -2,7 +2,7 @@ import { LogIn, LogOut } from "lucide-react";
 import type { Departure } from "../../types/station/departure";
 import type { Arrival } from "../../types/station/arrival";
 
-interface StationBoardTableProps {
+interface IStationBoardTableProps {
   title: string;
   trains: Array<Arrival | Departure>;
 }
@@ -10,11 +10,11 @@ interface StationBoardTableProps {
 export default function StationBoardTable({
   title,
   trains,
-}: StationBoardTableProps) {
+}: IStationBoardTableProps) {
   const Icon = title === "Прибуття" ? LogIn : LogOut;
 
   return (
-    <div className="bg-white rounded-xl shadow p-5 flex-1">
+    <div className="!bg-indigo-50 rounded-xl shadow p-5 flex-1">
       <div className="flex items-center gap-3 mb-4">
         <Icon className="w-6 h-6 text-indigo-500" />
         <h3 className="text-lg font-semibold text-gray-700">{title}</h3>

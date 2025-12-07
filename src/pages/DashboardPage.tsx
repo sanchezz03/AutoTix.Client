@@ -1,10 +1,19 @@
 import { Train } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { tokenStorage } from "../api";
 
 export default function DashboardPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = tokenStorage.get();
+    setIsAuthenticated(!!token);
+  }, []);
+
   return (
     <div className="w-full min-h-[calc(100vh-180px)] flex justify-center items-center">
-      <div className="bg-white shadow-lg rounded-2xl p-8 max-w-3xl w-full border border-gray-100 flex gap-6">
+      <div className="!bg-indigo-50 shadow-lg rounded-2xl p-8 max-w-3xl w-full border border-gray-100 flex gap-6">
         {/* ICON */}
         <div className="flex-shrink-0 flex items-center justify-center">
           <Train className="w-32 h-32 text-indigo-600" />
@@ -32,10 +41,10 @@ export default function DashboardPage() {
           {/* BUTTON */}
           <div className="mt-8 flex">
             <Link
-              to="/"
+              to={isAuthenticated ? "/stations" : "/login"}
               className="mx-auto bg-indigo-500
-             text-white text-lg font-medium px-8 py-3 rounded-xl shadow
-             hover:text-indigo-200 active:text-indigo-300 transition-colors"
+               text-white text-lg font-medium px-8 py-3 rounded-xl shadow
+               hover:text-indigo-200 active:text-indigo-300 transition-colors"
             >
               Let's Start
             </Link>

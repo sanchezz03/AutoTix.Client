@@ -5,25 +5,32 @@ import { stationService } from "../api";
 import StationHeader from "../components/station/StationHeader";
 import StationBoardTable from "../components/station/StationBoardTable";
 import StationSelectPopup from "../components/station/StationSelectPopup";
+import Loading from "../components/ui/Loading";
 
 export default function StationsPage() {
   const [stations, setStations] = useState<Station[]>([]);
   const [stationBoards, setStationBoards] = useState<Station[]>([]);
   const [selectedStation, setSelectedStation] = useState<Station | null>(null);
   const [board, setBoard] = useState<StationBoard | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const [loadingStations, setLoadingStations] = useState(false);
+  const [loadingBoard, setLoadingBoard] = useState(false);
+
   const [error, setError] = useState("");
 
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
     const loadStations = async () => {
+      setLoadingStations(true);
       try {
         const res = await stationService.getStations();
         setStations(res);
         if (res.length > 0) setSelectedStation(res[0]);
       } catch {
         setError("Failed to load stations");
+      } finally {
+        setLoadingStations(false);
       }
     };
 
@@ -33,15 +40,17 @@ export default function StationsPage() {
   useEffect(() => {
     const loadBoard = async () => {
       if (!selectedStation) return;
-      setLoading(true);
+
+      setLoadingBoard(true);
       setError("");
+
       try {
         const res = await stationService.getStationBoard(selectedStation.id);
         setBoard(res);
       } catch {
         setError("Failed to load station board");
       } finally {
-        setLoading(false);
+        setLoadingBoard(false);
       }
     };
 
@@ -50,6 +59,7 @@ export default function StationsPage() {
 
   const handleOpenPopup = async () => {
     setPopupOpen(true);
+
     try {
       const boards = await stationService.getStationBoards();
       setStationBoards(boards);
@@ -65,12 +75,12 @@ export default function StationsPage() {
           <StationHeader station={selectedStation} onChange={handleOpenPopup} />
         )}
 
-        {loading && (
-          <p className="text-gray-600 text-center">Завантаження...</p>
-        )}
         {error && <p className="text-red-500 text-center">{error}</p>}
 
-        {board && (
+        {loadingStations && <Loading />}
+        {loadingBoard && <Loading />}
+
+        {!loadingBoard && board && (
           <div className="grid md:grid-cols-2 gap-6">
             <StationBoardTable title="Відправлення" trains={board.departures} />
             <StationBoardTable title="Прибуття" trains={board.arrivals} />

@@ -2,7 +2,7 @@ import { X, Search } from "lucide-react";
 import type { Station } from "../../types/station/station";
 import { useState } from "react";
 
-interface StationSelectPopupProps {
+interface IStationSelectPopupProps {
   stations: Station[];
   station: Station;
   isOpen: boolean;
@@ -16,7 +16,7 @@ export default function StationSelectPopup({
   isOpen,
   onClose,
   onSelect,
-}: StationSelectPopupProps) {
+}: IStationSelectPopupProps) {
   const [search, setSearch] = useState("");
 
   if (!isOpen) return null;

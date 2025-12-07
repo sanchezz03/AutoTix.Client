@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, Train, LogIn, X, LogOut } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { authService, tokenStorage, userStorage } from "../../api";
@@ -11,6 +11,8 @@ export default function Layout({ children }: LayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = tokenStorage.get();
@@ -27,6 +29,7 @@ export default function Layout({ children }: LayoutProps) {
       setIsAuthenticated(false);
       setUserName(null);
       await authService.logout();
+      navigate("/");
     } catch (e) {
       console.error(e);
     }

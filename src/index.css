@@ -64,9 +64,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.DayPicker-wrapper,
+.DayPicker-Month {
+  width: 100% !important;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    /* color: #213547; */
     background-color: #ffffff;
   }
   a:hover {
@@ -74,5 +79,6 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+    /* background-color: #eef2ff; */
   }
 }

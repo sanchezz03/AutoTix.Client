@@ -10,14 +10,16 @@ export class StationService {
   }
 
   getStations(): Promise<Station[]> {
-    return this.client.get<Station[]>("/api/station");
+    return this.client.get<Station[]>("trips/api/station");
   }
 
   getStationBoards(): Promise<Station[]> {
-    return this.client.get<Station[]>("/api/station/boards");
+    return this.client.get<Station[]>("trips/api/station/boards");
   }
 
   getStationBoard(stationId: number): Promise<StationBoard> {
-    return this.client.get<StationBoard>(`/api/station/boards/${stationId}`);
+    return this.client.get<StationBoard>(
+      `trips/api/station/boards/${stationId}`
+    );
   }
 }

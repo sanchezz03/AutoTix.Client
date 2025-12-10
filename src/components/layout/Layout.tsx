@@ -70,6 +70,9 @@ export default function Layout({ children }: LayoutProps) {
               <Link to="/stations" className="hover:text-gray-200 transition">
                 Stations
               </Link>
+              <Link to="/orders" className="hover:text-gray-200 transition">
+                Orders
+              </Link>
             </nav>
           )}
         </div>

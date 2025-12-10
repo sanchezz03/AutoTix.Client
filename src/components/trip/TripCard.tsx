@@ -7,9 +7,10 @@ import TripTravelLine from "./TripTravelLine";
 
 interface ITripCardProps {
   segment: TripSegment;
+  onBuy: (segment: TripSegment) => void;
 }
 
-export default function TripCard({ segment }: ITripCardProps) {
+export default function TripCard({ segment, onBuy }: ITripCardProps) {
   const departDate = new Date(segment.departAt * 1000);
   const arriveDate = new Date(segment.arriveAt * 1000);
   const durationMinutes = Math.floor(
@@ -55,7 +56,7 @@ export default function TripCard({ segment }: ITripCardProps) {
 
       <div className="w-px bg-gray-300 mx-4"></div>
 
-      <TripBuyButton />
+      <TripBuyButton onClick={() => onBuy(segment)} />
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import type { Station } from "../types/station/station";
-import { stationService, tripService } from "../api";
+import { orderService, stationService, tripService, userStorage } from "../api";
 import TripSearchForm from "../components/trip/TripSearchForm";
 import type { Trip } from "../types/trip/trip";
 import TripCard from "../components/trip/TripCard";
+import type { TripSegment } from "../types/trip/tripSegment";
+import { mapTripToSnapshot } from "../utils/mapTripToSnapshot";
 
 const DEFAULT_FROM: Station = {
   id: 2200001,
@@ -74,6 +76,22 @@ export default function TripsPage() {
     }
   };
 
+  const handleBuy = async (segment: TripSegment) => {
+    try {
+      const tripSnapshot = mapTripToSnapshot({
+        stationFrom: segment.stationFrom,
+        stationTo: segment.stationTo,
+        direct: [segment],
+      });
+      const res = await orderService.addToCart(tripSnapshot, 1);
+
+      alert(`Поїзд додано в корзину, OrderId: ${res.orderId}`);
+    } catch (err) {
+      console.error(err);
+      alert("Не вдалося додати поїзд в корзину");
+    }
+  };
+
   return (
     <div className="p-6 flex flex-col gap-[60px]">
       <TripSearchForm
@@ -102,7 +120,7 @@ export default function TripsPage() {
             )
           )
           .map((segment) => (
-            <TripCard key={segment.id} segment={segment} />
+            <TripCard key={segment.id} segment={segment} onBuy={handleBuy} />
           ))}
       </div>
     </div>

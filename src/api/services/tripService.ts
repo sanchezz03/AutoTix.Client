@@ -27,7 +27,7 @@ export class TripService {
       withTransfers: withTransfers.toString(),
     });
 
-    return this.client.get<Trip>(`/api/trip?${params.toString()}`);
+    return this.client.get<Trip>(`trips/api/trip?${params.toString()}`);
   }
 
   getDepartureDates(
@@ -40,7 +40,7 @@ export class TripService {
     });
 
     return this.client.get<DepartureDate>(
-      `/api/trip/departure-dates?${params.toString()}`
+      `trips/api/trip/departure-dates?${params.toString()}`
     );
   }
 }

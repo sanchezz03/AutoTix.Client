@@ -1,5 +1,6 @@
 import { HttpClient } from "./httpClient";
 import { AuthService } from "./services/authService";
+import { OrderService } from "./services/orderService";
 import { StationService } from "./services/stationService";
 import { TripService } from "./services/tripService";
 
@@ -10,9 +11,13 @@ export const tokenStorage = {
 };
 
 export const userStorage = {
+  getUserId: () => localStorage.getItem("userId"),
+  setUserId: (userId: string) => localStorage.setItem("userId", userId),
   getName: () => localStorage.getItem("userName"),
   setName: (name: string) => localStorage.setItem("userName", name),
-  clear: () => localStorage.removeItem("userName"),
+  clear: () => {
+    localStorage.removeItem("userName"), localStorage.removeItem("userId");
+  },
 };
 
 export const clearAuth = () => {
@@ -26,23 +31,12 @@ const handleUnauthorized = () => {
 };
 
 export const client = new HttpClient({
-  baseUrl: "https://localhost:7046",
-  getToken: tokenStorage.get,
-  onUnauthorized: handleUnauthorized,
-});
-
-export const stationsClient = new HttpClient({
-  baseUrl: "https://localhost:7134",
-  getToken: tokenStorage.get,
-  onUnauthorized: handleUnauthorized,
-});
-
-export const tripsClient = new HttpClient({
-  baseUrl: "https://localhost:7134",
+  baseUrl: "http://localhost:7000/",
   getToken: tokenStorage.get,
   onUnauthorized: handleUnauthorized,
 });
 
 export const authService = new AuthService(client);
-export const stationService = new StationService(stationsClient);
-export const tripService = new TripService(tripsClient);
+export const stationService = new StationService(client);
+export const tripService = new TripService(client);
+export const orderService = new OrderService(client);

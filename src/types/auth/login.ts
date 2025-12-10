@@ -103,6 +103,7 @@ export interface GenderDTO {
 }
 
 export interface LoginResponseDTO {
+  userId: string;
   token: string;
   expiresIn: number;
   profile: ProfileDTO;

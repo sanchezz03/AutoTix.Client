@@ -15,14 +15,14 @@ export class AuthService {
 
   sendSms(data: SendSmsRequestDTO): Promise<SendSmsResponseDTO> {
     return this.client.post<SendSmsResponseDTO, SendSmsRequestDTO>(
-      "/api/auth/send-message",
+      "users/api/auth/send-message",
       data
     );
   }
 
   async login(data: LoginRequestDTO): Promise<LoginResponseDTO> {
     const res = await this.client.post<LoginResponseDTO, LoginRequestDTO>(
-      "/api/auth/login",
+      "users/api/auth/login",
       data
     );
 
@@ -30,13 +30,17 @@ export class AuthService {
 
     const fullName = `${res.profile.passenger.firstName} ${res.profile.passenger.lastName}`;
     userStorage.setName(fullName);
+    userStorage.setUserId(res.userId);
 
     return res;
   }
 
   async logout(): Promise<void> {
     try {
-      await this.client.post<void, undefined>("/api/auth/logout", undefined);
+      await this.client.post<void, undefined>(
+        "users/api/auth/logout",
+        undefined
+      );
     } finally {
       tokenStorage.clear();
       userStorage.clear();
